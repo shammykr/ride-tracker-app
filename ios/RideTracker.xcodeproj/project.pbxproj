@@ -7,22 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0053F2CAD991F92EA2157BA7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B804238B5671025A1B8072 /* Foundation.framework */; };
 		0C80B921A6F3F58F76C31292 /* libPods-RideTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-RideTracker.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		291CD44C6E6C89D5AF5E69C0 /* TripRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496833A98945D3183454334A /* TripRepositoryTests.swift */; };
+		3C95780F89ADDDF2C37E33C2 /* NativeModuleRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C68A54BB5378CB1BEC6772 /* NativeModuleRegistry.swift */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A2B7106CA6CF1A7607D83E4B /* RCTExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672D2CF4594A8669FEAB8652 /* RCTExport.swift */; };
+		A9126150D5CFF5627AB9142D /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98ADCA6A504013B0106AA2EC /* PushNotifications.swift */; };
+		ABA19F38C3FEA682A39CC5B4 /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F2D3ED5423C98E5B7B4C56 /* TripRepository.swift */; };
+		AD2FA9787A1EAB9F2E2311C6 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91469221BEFA39BC8A50FEA4 /* LocationService.swift */; };
+		B82929CE69E5C76EE6ACFB19 /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B08E8F0834BCE6E2EF0E211 /* HapticFeedback.swift */; };
+		DDF4D83E33326E9ACCD91F1B /* TripStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82315BA589C76B95B4267CF4 /* TripStore.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		06CD0306631409C107AAA19E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = RideTracker;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0559E41206CCCC81E26702E0 /* RideTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RideTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* RideTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RideTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RideTracker/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RideTracker/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = RideTracker/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		31F2D3ED5423C98E5B7B4C56 /* TripRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TripRepository.swift; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-RideTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RideTracker.debug.xcconfig"; path = "Target Support Files/Pods-RideTracker/Pods-RideTracker.debug.xcconfig"; sourceTree = "<group>"; };
+		496833A98945D3183454334A /* TripRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TripRepositoryTests.swift; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-RideTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RideTracker.release.xcconfig"; path = "Target Support Files/Pods-RideTracker/Pods-RideTracker.release.xcconfig"; sourceTree = "<group>"; };
+		5B08E8F0834BCE6E2EF0E211 /* HapticFeedback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-RideTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RideTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		672D2CF4594A8669FEAB8652 /* RCTExport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RCTExport.swift; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RideTracker/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RideTracker/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		82315BA589C76B95B4267CF4 /* TripStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TripStore.swift; sourceTree = "<group>"; };
+		88B804238B5671025A1B8072 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		91469221BEFA39BC8A50FEA4 /* LocationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		98ADCA6A504013B0106AA2EC /* PushNotifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
+		A0C68A54BB5378CB1BEC6772 /* NativeModuleRegistry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeModuleRegistry.swift; sourceTree = "<group>"; };
+		BFEA762203797C38DCEC96EB /* RideTracker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = RideTracker.entitlements; sourceTree = "<group>"; };
+		D29E67E486EB34F2184D2FFE /* RideTracker-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RideTracker-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -32,6 +63,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-RideTracker.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D78EA681B9BB2E3942C6A5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0053F2CAD991F92EA2157BA7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +85,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				A17D1F794F4A926577A3ACE1 /* NativeModules */,
+				98ADCA6A504013B0106AA2EC /* PushNotifications.swift */,
+				D29E67E486EB34F2184D2FFE /* RideTracker-Bridging-Header.h */,
+				BFEA762203797C38DCEC96EB /* RideTracker.entitlements */,
 			);
 			name = RideTracker;
 			sourceTree = "<group>";
@@ -55,8 +98,26 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-RideTracker.a */,
+				561708C4ACB4B57F8F9B90AE /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		561708C4ACB4B57F8F9B90AE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				88B804238B5671025A1B8072 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		80A854DC72E608FDF5926571 /* RideTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				496833A98945D3183454334A /* TripRepositoryTests.swift */,
+			);
+			name = RideTrackerTests;
+			path = RideTrackerTests;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -74,6 +135,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				80A854DC72E608FDF5926571 /* RideTrackerTests */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -84,8 +146,23 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* RideTracker.app */,
+				0559E41206CCCC81E26702E0 /* RideTrackerTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A17D1F794F4A926577A3ACE1 /* NativeModules */ = {
+			isa = PBXGroup;
+			children = (
+				672D2CF4594A8669FEAB8652 /* RCTExport.swift */,
+				91469221BEFA39BC8A50FEA4 /* LocationService.swift */,
+				5B08E8F0834BCE6E2EF0E211 /* HapticFeedback.swift */,
+				31F2D3ED5423C98E5B7B4C56 /* TripRepository.swift */,
+				82315BA589C76B95B4267CF4 /* TripStore.swift */,
+				A0C68A54BB5378CB1BEC6772 /* NativeModuleRegistry.swift */,
+			);
+			name = NativeModules;
+			path = NativeModules;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -121,6 +198,24 @@
 			productReference = 13B07F961A680F5B00A75B9A /* RideTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4ADD29C11012C20AB124271E /* RideTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D7879D7DFF03E24399C76BB /* Build configuration list for PBXNativeTarget "RideTrackerTests" */;
+			buildPhases = (
+				1AA5EBBBB627A5D36962A510 /* Sources */,
+				3D78EA681B9BB2E3942C6A5B /* Frameworks */,
+				B7FB9FF23813FB478604D076 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80396EF574DEA0146B21B9F0 /* PBXTargetDependency */,
+			);
+			name = RideTrackerTests;
+			productName = RideTrackerTests;
+			productReference = 0559E41206CCCC81E26702E0 /* RideTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,6 +243,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* RideTracker */,
+				4ADD29C11012C20AB124271E /* RideTrackerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -159,6 +255,13 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7FB9FF23813FB478604D076 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,10 +348,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				A2B7106CA6CF1A7607D83E4B /* RCTExport.swift in Sources */,
+				AD2FA9787A1EAB9F2E2311C6 /* LocationService.swift in Sources */,
+				B82929CE69E5C76EE6ACFB19 /* HapticFeedback.swift in Sources */,
+				ABA19F38C3FEA682A39CC5B4 /* TripRepository.swift in Sources */,
+				DDF4D83E33326E9ACCD91F1B /* TripStore.swift in Sources */,
+				3C95780F89ADDDF2C37E33C2 /* NativeModuleRegistry.swift in Sources */,
+				A9126150D5CFF5627AB9142D /* PushNotifications.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1AA5EBBBB627A5D36962A510 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				291CD44C6E6C89D5AF5E69C0 /* TripRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		80396EF574DEA0146B21B9F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RideTracker;
+			target = 13B07F861A680F5B00A75B9A /* RideTracker */;
+			targetProxy = 06CD0306631409C107AAA19E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
@@ -257,6 +384,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RideTracker/RideTracker.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RideTracker/Info.plist;
@@ -271,8 +399,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker;
 				PRODUCT_NAME = RideTracker;
+				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -285,6 +414,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RideTracker/RideTracker.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = RideTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -298,8 +428,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker;
 				PRODUCT_NAME = RideTracker;
+				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -444,6 +575,39 @@
 			};
 			name = Release;
 		};
+		CB34219F8E0E8ED9D947C224 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RideTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RideTracker";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CD182A7E9B20F4C72BE97144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RideTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RideTracker";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -452,6 +616,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D7879D7DFF03E24399C76BB /* Build configuration list for PBXNativeTarget "RideTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB34219F8E0E8ED9D947C224 /* Release */,
+				CD182A7E9B20F4C72BE97144 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
