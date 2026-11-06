@@ -1,5 +1,5 @@
-import {createSelector} from 'reselect';
-import type {TripSummary} from '../types';
+import { createSelector } from 'reselect';
+import type { TripSummary } from '../types';
 
 const selectTrips = (trips: TripSummary[]) => trips;
 

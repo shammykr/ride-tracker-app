@@ -1,14 +1,14 @@
-import {useCallback, useEffect, useReducer, useRef} from 'react';
-import {useAppServices} from '../context/AppServices';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useAppServices } from '../context/AppServices';
 import {
   selectCanCancel,
   selectCanRequest,
   selectStatusText,
   selectVisibleDrivers,
 } from '../selectors/rideSelectors';
-import type {Coordinate} from '../types';
-import {formatCurrency} from '../utils/format';
-import {initialRideState, rideReducer} from './rideReducer';
+import type { Coordinate } from '../types';
+import { formatCurrency } from '../utils/format';
+import { initialRideState, rideReducer } from './rideReducer';
 
 /**
  * ViewModel for the ride screen: owns the WebSocket subscription, the user's
@@ -16,20 +16,36 @@ import {initialRideState, rideReducer} from './rideReducer';
  * notifications and a saved trip. The screen only renders what this returns.
  */
 export function useRideViewModel() {
-  const {socket, location, haptics, notify, tripStore} = useAppServices();
+  const { socket, location, haptics, notify, tripStore } = useAppServices();
   const [state, dispatch] = useReducer(rideReducer, initialRideState);
 
   // WebSocket: connection state and server events.
   useEffect(() => {
     const unsubscribers = [
-      socket.onConnectionChange(connection => dispatch({type: 'connection', state: connection})),
-      socket.on('nearby_drivers', ({drivers}) => dispatch({type: 'nearbyDrivers', drivers})),
-      socket.on('driver_assigned', payload => dispatch({type: 'driverAssigned', payload})),
-      socket.on('driver_approaching', payload => dispatch({type: 'driverApproaching', payload})),
-      socket.on('driver_arrived', payload => dispatch({type: 'driverArrived', payload})),
-      socket.on('trip_started', payload => dispatch({type: 'tripStarted', payload})),
-      socket.on('trip_progress', payload => dispatch({type: 'tripProgress', payload})),
-      socket.on('trip_completed', payload => dispatch({type: 'tripCompleted', payload})),
+      socket.onConnectionChange(connection =>
+        dispatch({ type: 'connection', state: connection }),
+      ),
+      socket.on('nearby_drivers', ({ drivers }) =>
+        dispatch({ type: 'nearbyDrivers', drivers }),
+      ),
+      socket.on('driver_assigned', payload =>
+        dispatch({ type: 'driverAssigned', payload }),
+      ),
+      socket.on('driver_approaching', payload =>
+        dispatch({ type: 'driverApproaching', payload }),
+      ),
+      socket.on('driver_arrived', payload =>
+        dispatch({ type: 'driverArrived', payload }),
+      ),
+      socket.on('trip_started', payload =>
+        dispatch({ type: 'tripStarted', payload }),
+      ),
+      socket.on('trip_progress', payload =>
+        dispatch({ type: 'tripProgress', payload }),
+      ),
+      socket.on('trip_completed', payload =>
+        dispatch({ type: 'tripCompleted', payload }),
+      ),
     ];
     socket.connect();
     return () => {
@@ -46,7 +62,10 @@ export function useRideViewModel() {
       .watchPosition(position =>
         dispatch({
           type: 'userLocation',
-          location: {latitude: position.latitude, longitude: position.longitude},
+          location: {
+            latitude: position.latitude,
+            longitude: position.longitude,
+          },
         }),
       )
       .then(unsubscribe => {
@@ -76,11 +95,17 @@ export function useRideViewModel() {
     switch (state.phase) {
       case 'assigned':
         haptics.impact('light');
-        notify('Driver assigned', `${driverName} is on the way · ${state.driver?.vehicle ?? ''}`);
+        notify(
+          'Driver assigned',
+          `${driverName} is on the way · ${state.driver?.vehicle ?? ''}`,
+        );
         break;
       case 'arrived':
         haptics.impact('heavy');
-        notify('Your driver has arrived', `${driverName} is waiting at the pickup point`);
+        notify(
+          'Your driver has arrived',
+          `${driverName} is waiting at the pickup point`,
+        );
         break;
       case 'inProgress':
         haptics.impact('medium');
@@ -89,15 +114,20 @@ export function useRideViewModel() {
         haptics.impact('rigid');
         if (state.lastTrip) {
           const trip = state.lastTrip;
-          notify('Trip completed', `${formatCurrency(trip.fare, trip.currency)} with ${driverName}`);
-          tripStore.saveTrip(trip).catch(error => console.warn('Could not save trip', error));
+          notify(
+            'Trip completed',
+            `${formatCurrency(trip.fare, trip.currency)} with ${driverName}`,
+          );
+          tripStore
+            .saveTrip(trip)
+            .catch(error => console.warn('Could not save trip', error));
         }
         break;
     }
   }, [state.phase, state.driver, state.lastTrip, haptics, notify, tripStore]);
 
   const setDropoff = useCallback((dropoff: Coordinate) => {
-    dispatch({type: 'setDropoff', dropoff});
+    dispatch({ type: 'setDropoff', dropoff });
   }, []);
 
   /** `fallbackPickup` (e.g. the map centre) is used when there is no location fix. */
@@ -107,12 +137,12 @@ export function useRideViewModel() {
         return;
       }
       const pickup = state.userLocation ?? fallbackPickup;
-      dispatch({type: 'requestStarted', pickup});
+      dispatch({ type: 'requestStarted', pickup });
       haptics.impact('soft');
       try {
-        await socket.requestRide({pickup, dropoff: state.dropoff});
+        await socket.requestRide({ pickup, dropoff: state.dropoff });
       } catch (error) {
-        dispatch({type: 'requestFailed', error: (error as Error).message});
+        dispatch({ type: 'requestFailed', error: (error as Error).message });
       }
     },
     [socket, haptics, state.dropoff, state.userLocation],
@@ -120,10 +150,10 @@ export function useRideViewModel() {
 
   const cancelRide = useCallback(() => {
     socket.cancelRide();
-    dispatch({type: 'cancel'});
+    dispatch({ type: 'cancel' });
   }, [socket]);
 
-  const dismissTrip = useCallback(() => dispatch({type: 'dismiss'}), []);
+  const dismissTrip = useCallback(() => dispatch({ type: 'dismiss' }), []);
 
   return {
     state,

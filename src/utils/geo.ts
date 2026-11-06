@@ -1,4 +1,4 @@
-import type {Coordinate} from '../types';
+import type { Coordinate } from '../types';
 
 /** Region that fits all points, with some padding. */
 export function regionForCoordinates(points: Coordinate[], padding = 1.4) {

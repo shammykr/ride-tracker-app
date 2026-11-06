@@ -1,12 +1,12 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
-import {TRIP_HISTORY_LIMIT} from '../config';
-import {useAppServices} from '../context/AppServices';
-import {selectTripStats} from '../selectors/tripSelectors';
-import type {TripSummary} from '../types';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { TRIP_HISTORY_LIMIT } from '../config';
+import { useAppServices } from '../context/AppServices';
+import { selectTripStats } from '../selectors/tripSelectors';
+import type { TripSummary } from '../types';
 
 /** ViewModel for trip history: lightweight summaries (no routes) from the trip store. */
 export function useTripHistoryViewModel() {
-  const {tripStore} = useAppServices();
+  const { tripStore } = useAppServices();
   const [trips, setTrips] = useState<TripSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,5 +43,12 @@ export function useTripHistoryViewModel() {
     await reload();
   }, [tripStore, reload]);
 
-  return {trips, loading, error, stats: selectTripStats(trips), reload, clearHistory};
+  return {
+    trips,
+    loading,
+    error,
+    stats: selectTripStats(trips),
+    reload,
+    clearHistory,
+  };
 }

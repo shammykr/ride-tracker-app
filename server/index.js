@@ -11,7 +11,7 @@
  *   PORT=3000 TICK_MS=1000 CENTER=37.7749,-122.4194 node index.js
  */
 const http = require('node:http');
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
 
 const PORT = Number(process.env.PORT || 3000);
 const TICK_MS = Number(process.env.TICK_MS || 1000);
@@ -23,7 +23,18 @@ const APPROACH_TICKS = 12; // how long the driver takes to reach the pickup
 const ARRIVED_TICKS = 3; // waiting at the pickup before the trip starts
 const TRIP_TICKS = 20;
 
-const NAMES = ['Maya', 'Leo', 'Priya', 'Sam', 'Diego', 'Aiko', 'Noah', 'Zara', 'Omar', 'Ivy'];
+const NAMES = [
+  'Maya',
+  'Leo',
+  'Priya',
+  'Sam',
+  'Diego',
+  'Aiko',
+  'Noah',
+  'Zara',
+  'Omar',
+  'Ivy',
+];
 const VEHICLES = [
   'Toyota Prius · 7ABC123',
   'Tesla Model 3 · 8XYZ789',
@@ -34,12 +45,15 @@ const VEHICLES = [
 
 const jitter = scale => (Math.random() - 0.5) * scale;
 
-const drivers = Array.from({length: DRIVER_COUNT}, (_, i) => ({
+const drivers = Array.from({ length: DRIVER_COUNT }, (_, i) => ({
   id: `driver-${i + 1}`,
   name: NAMES[i % NAMES.length],
   vehicle: VEHICLES[i % VEHICLES.length],
   rating: Number((4.6 + Math.random() * 0.4).toFixed(2)),
-  location: {latitude: CENTER_LAT + jitter(0.03), longitude: CENTER_LNG + jitter(0.03)},
+  location: {
+    latitude: CENTER_LAT + jitter(0.03),
+    longitude: CENTER_LNG + jitter(0.03),
+  },
   heading: Math.floor(Math.random() * 360),
   busy: false,
 }));
@@ -50,18 +64,22 @@ function distanceKm(a, b) {
   const dLng = toRad(b.longitude - a.longitude);
   const h =
     Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(a.latitude)) * Math.cos(toRad(b.latitude)) * Math.sin(dLng / 2) ** 2;
+    Math.cos(toRad(a.latitude)) *
+      Math.cos(toRad(b.latitude)) *
+      Math.sin(dLng / 2) ** 2;
   return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
 
 function headingBetween(a, b) {
-  const angle = (Math.atan2(b.longitude - a.longitude, b.latitude - a.latitude) * 180) / Math.PI;
+  const angle =
+    (Math.atan2(b.longitude - a.longitude, b.latitude - a.latitude) * 180) /
+    Math.PI;
   return Math.round((angle + 360) % 360);
 }
 
 /** Straight-line path from a to b in `steps` points (excluding a, including b). */
 function path(a, b, steps) {
-  return Array.from({length: steps}, (_, i) => {
+  return Array.from({ length: steps }, (_, i) => {
     const t = (i + 1) / steps;
     return {
       latitude: a.latitude + (b.latitude - a.latitude) * t,
@@ -70,7 +88,7 @@ function path(a, b, steps) {
   });
 }
 
-const publicDriver = ({busy, ...driver}) => driver;
+const publicDriver = ({ busy, ...driver }) => driver;
 
 function isCoordinate(value) {
   return (
@@ -83,10 +101,10 @@ function isCoordinate(value) {
 }
 
 const server = http.createServer((req, res) => {
-  res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(JSON.stringify({ok: true, drivers: drivers.length}));
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ ok: true, drivers: drivers.length }));
 });
-const io = new Server(server, {cors: {origin: '*'}});
+const io = new Server(server, { cors: { origin: '*' } });
 
 // Idle drivers drift around so the map is alive.
 setInterval(() => {
@@ -101,14 +119,20 @@ setInterval(() => {
     driver.heading = headingBetween(driver.location, next);
     driver.location = next;
   }
-  io.emit('nearby_drivers', {drivers: drivers.map(publicDriver), timestamp: Date.now()});
+  io.emit('nearby_drivers', {
+    drivers: drivers.map(publicDriver),
+    timestamp: Date.now(),
+  });
 }, TICK_MS);
 
 let rideCounter = 0;
 
 io.on('connection', socket => {
   console.log(`client connected ${socket.id}`);
-  socket.emit('nearby_drivers', {drivers: drivers.map(publicDriver), timestamp: Date.now()});
+  socket.emit('nearby_drivers', {
+    drivers: drivers.map(publicDriver),
+    timestamp: Date.now(),
+  });
   let activeRide = null;
 
   const finish = () => {
@@ -122,17 +146,23 @@ io.on('connection', socket => {
   socket.on('request_ride', (request, ack) => {
     const reply = typeof ack === 'function' ? ack : () => {};
     if (activeRide) {
-      return reply({ok: false, error: 'A ride is already in progress'});
+      return reply({ ok: false, error: 'A ride is already in progress' });
     }
     if (!isCoordinate(request?.pickup) || !isCoordinate(request?.dropoff)) {
-      return reply({ok: false, error: 'pickup and dropoff coordinates are required'});
+      return reply({
+        ok: false,
+        error: 'pickup and dropoff coordinates are required',
+      });
     }
     const free = drivers.filter(d => !d.busy);
     if (free.length === 0) {
-      return reply({ok: false, error: 'No drivers available'});
+      return reply({ ok: false, error: 'No drivers available' });
     }
     const driver = free.reduce((best, d) =>
-      distanceKm(d.location, request.pickup) < distanceKm(best.location, request.pickup) ? d : best,
+      distanceKm(d.location, request.pickup) <
+      distanceKm(best.location, request.pickup)
+        ? d
+        : best,
     );
     driver.busy = true;
 
@@ -144,7 +174,7 @@ io.on('connection', socket => {
     let tick = 0;
     let startedAt = null;
 
-    reply({ok: true, rideId});
+    reply({ ok: true, rideId });
     socket.emit('driver_assigned', {
       rideId,
       driver: publicDriver(driver),
@@ -156,7 +186,7 @@ io.on('connection', socket => {
       driver.location = to;
     };
 
-    activeRide = {driver, timer: null};
+    activeRide = { driver, timer: null };
     activeRide.timer = setInterval(() => {
       tick += 1;
       if (tick <= APPROACH_TICKS) {
@@ -169,11 +199,11 @@ io.on('connection', socket => {
             etaSeconds: Math.round((APPROACH_TICKS - tick) * secondsPerTick),
           });
         } else {
-          socket.emit('driver_arrived', {rideId, location: driver.location});
+          socket.emit('driver_arrived', { rideId, location: driver.location });
         }
       } else if (tick === APPROACH_TICKS + ARRIVED_TICKS) {
         startedAt = Date.now();
-        socket.emit('trip_started', {rideId, startedAt});
+        socket.emit('trip_started', { rideId, startedAt });
       } else if (tick > APPROACH_TICKS + ARRIVED_TICKS) {
         const step = tick - APPROACH_TICKS - ARRIVED_TICKS;
         move(trip[step - 1]);
@@ -211,5 +241,7 @@ io.on('connection', socket => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Ride Tracker mock server on http://localhost:${PORT} (tick ${TICK_MS} ms)`);
+  console.log(
+    `Ride Tracker mock server on http://localhost:${PORT} (tick ${TICK_MS} ms)`,
+  );
 });

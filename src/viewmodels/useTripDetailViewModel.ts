@@ -1,13 +1,13 @@
-import {useEffect, useState} from 'react';
-import {useAppServices} from '../context/AppServices';
-import type {Trip} from '../types';
+import { useEffect, useState } from 'react';
+import { useAppServices } from '../context/AppServices';
+import type { Trip } from '../types';
 
 /**
  * ViewModel for one trip. The full record (with its route) is loaded lazily,
  * only when the detail screen opens; the history list never fetches routes.
  */
 export function useTripDetailViewModel(tripId: string) {
-  const {tripStore} = useAppServices();
+  const { tripStore } = useAppServices();
   const [trip, setTrip] = useState<Trip | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,5 +30,5 @@ export function useTripDetailViewModel(tripId: string) {
     };
   }, [tripId, tripStore]);
 
-  return {trip, loading, error};
+  return { trip, loading, error };
 }

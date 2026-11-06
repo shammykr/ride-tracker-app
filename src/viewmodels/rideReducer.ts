@@ -1,5 +1,5 @@
-import type {ConnectionState, ServerEvents} from '../services/RideSocket';
-import type {Coordinate, Driver, RidePhase, Trip} from '../types';
+import type { ConnectionState, ServerEvents } from '../services/RideSocket';
+import type { Coordinate, Driver, RidePhase, Trip } from '../types';
 
 type Payload<E extends keyof ServerEvents> = Parameters<ServerEvents[E]>[0];
 
@@ -23,20 +23,20 @@ export interface RideState {
 }
 
 export type RideAction =
-  | {type: 'connection'; state: ConnectionState}
-  | {type: 'nearbyDrivers'; drivers: Driver[]}
-  | {type: 'userLocation'; location: Coordinate}
-  | {type: 'setDropoff'; dropoff: Coordinate}
-  | {type: 'requestStarted'; pickup: Coordinate}
-  | {type: 'requestFailed'; error: string}
-  | {type: 'driverAssigned'; payload: Payload<'driver_assigned'>}
-  | {type: 'driverApproaching'; payload: Payload<'driver_approaching'>}
-  | {type: 'driverArrived'; payload: Payload<'driver_arrived'>}
-  | {type: 'tripStarted'; payload: Payload<'trip_started'>}
-  | {type: 'tripProgress'; payload: Payload<'trip_progress'>}
-  | {type: 'tripCompleted'; payload: Payload<'trip_completed'>}
-  | {type: 'cancel'}
-  | {type: 'dismiss'};
+  | { type: 'connection'; state: ConnectionState }
+  | { type: 'nearbyDrivers'; drivers: Driver[] }
+  | { type: 'userLocation'; location: Coordinate }
+  | { type: 'setDropoff'; dropoff: Coordinate }
+  | { type: 'requestStarted'; pickup: Coordinate }
+  | { type: 'requestFailed'; error: string }
+  | { type: 'driverAssigned'; payload: Payload<'driver_assigned'> }
+  | { type: 'driverApproaching'; payload: Payload<'driver_approaching'> }
+  | { type: 'driverArrived'; payload: Payload<'driver_arrived'> }
+  | { type: 'tripStarted'; payload: Payload<'trip_started'> }
+  | { type: 'tripProgress'; payload: Payload<'trip_progress'> }
+  | { type: 'tripCompleted'; payload: Payload<'trip_completed'> }
+  | { type: 'cancel' }
+  | { type: 'dismiss' };
 
 export const initialRideState: RideState = {
   connection: 'connecting',
@@ -56,7 +56,10 @@ export const initialRideState: RideState = {
 };
 
 /** Back to idle, keeping what isn't tied to a ride. */
-function resetRide(state: RideState, overrides: Partial<RideState> = {}): RideState {
+function resetRide(
+  state: RideState,
+  overrides: Partial<RideState> = {},
+): RideState {
   return {
     ...initialRideState,
     connection: state.connection,
@@ -66,27 +69,34 @@ function resetRide(state: RideState, overrides: Partial<RideState> = {}): RideSt
   };
 }
 
-const ACTIVE_PHASES: RidePhase[] = ['assigned', 'approaching', 'arrived', 'inProgress'];
+const ACTIVE_PHASES: RidePhase[] = [
+  'assigned',
+  'approaching',
+  'arrived',
+  'inProgress',
+];
 
 /** Pure state machine for a ride: idle → requesting → assigned → approaching → arrived → inProgress → completed. */
 export function rideReducer(state: RideState, action: RideAction): RideState {
   switch (action.type) {
     case 'connection':
-      return {...state, connection: action.state};
+      return { ...state, connection: action.state };
     case 'nearbyDrivers':
-      return {...state, nearbyDrivers: action.drivers};
+      return { ...state, nearbyDrivers: action.drivers };
     case 'userLocation':
-      return {...state, userLocation: action.location};
+      return { ...state, userLocation: action.location };
     case 'setDropoff':
       return state.phase === 'idle' || state.phase === 'completed'
-        ? {...resetRide(state), dropoff: action.dropoff}
+        ? { ...resetRide(state), dropoff: action.dropoff }
         : state;
     case 'requestStarted':
       return state.phase === 'idle' && state.dropoff
-        ? {...state, phase: 'requesting', pickup: action.pickup, error: null}
+        ? { ...state, phase: 'requesting', pickup: action.pickup, error: null }
         : state;
     case 'requestFailed':
-      return state.phase === 'requesting' ? {...state, phase: 'idle', error: action.error} : state;
+      return state.phase === 'requesting'
+        ? { ...state, phase: 'idle', error: action.error }
+        : state;
     case 'driverAssigned':
       // The server sends driver_assigned right after accepting the request.
       if (state.phase !== 'requesting') {
@@ -101,7 +111,7 @@ export function rideReducer(state: RideState, action: RideAction): RideState {
       };
     case 'cancel':
       return ACTIVE_PHASES.includes(state.phase) || state.phase === 'requesting'
-        ? resetRide(state, {dropoff: state.dropoff})
+        ? resetRide(state, { dropoff: state.dropoff })
         : state;
     case 'dismiss':
       return state.phase === 'completed' ? resetRide(state) : state;
@@ -116,14 +126,18 @@ export function rideReducer(state: RideState, action: RideAction): RideState {
       return {
         ...state,
         phase: 'approaching',
-        driver: {...state.driver, location: action.payload.location, heading: action.payload.heading},
+        driver: {
+          ...state.driver,
+          location: action.payload.location,
+          heading: action.payload.heading,
+        },
         etaSeconds: action.payload.etaSeconds,
       };
     case 'driverArrived':
       return {
         ...state,
         phase: 'arrived',
-        driver: {...state.driver, location: action.payload.location},
+        driver: { ...state.driver, location: action.payload.location },
         etaSeconds: 0,
       };
     case 'tripStarted':
@@ -136,7 +150,11 @@ export function rideReducer(state: RideState, action: RideAction): RideState {
     case 'tripProgress':
       return {
         ...state,
-        driver: {...state.driver, location: action.payload.location, heading: action.payload.heading},
+        driver: {
+          ...state.driver,
+          location: action.payload.location,
+          heading: action.payload.heading,
+        },
         remainingSeconds: action.payload.remainingSeconds,
         route: [...state.route, action.payload.location],
       };
@@ -144,7 +162,7 @@ export function rideReducer(state: RideState, action: RideAction): RideState {
       if (!state.pickup || !state.dropoff) {
         return state;
       }
-      const {payload} = action;
+      const { payload } = action;
       const trip: Trip = {
         id: payload.rideId,
         driverName: state.driver.name,
@@ -155,11 +173,18 @@ export function rideReducer(state: RideState, action: RideAction): RideState {
         currency: payload.currency,
         distanceKm: payload.distanceKm,
         durationSeconds: payload.durationSeconds,
-        startedAt: state.startedAt ?? payload.completedAt - payload.durationSeconds * 1000,
+        startedAt:
+          state.startedAt ??
+          payload.completedAt - payload.durationSeconds * 1000,
         completedAt: payload.completedAt,
         route: [...state.route, state.dropoff],
       };
-      return {...state, phase: 'completed', remainingSeconds: 0, lastTrip: trip};
+      return {
+        ...state,
+        phase: 'completed',
+        remainingSeconds: 0,
+        lastTrip: trip,
+      };
     }
   }
 }

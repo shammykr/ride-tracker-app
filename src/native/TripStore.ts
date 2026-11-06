@@ -1,5 +1,5 @@
-import {NativeModules} from 'react-native';
-import type {Trip, TripSummary} from '../types';
+import { NativeModules } from 'react-native';
+import type { Trip, TripSummary } from '../types';
 
 export interface TripStore {
   saveTrip(trip: Trip): Promise<void>;
@@ -24,7 +24,7 @@ export function createMemoryTripStore(initial: Trip[] = []): TripStore {
       return [...trips.values()]
         .sort((a, b) => b.completedAt - a.completedAt)
         .slice(0, limit)
-        .map(({route: _route, ...summary}) => summary);
+        .map(({ route: _route, ...summary }) => summary);
     },
     async getTrip(id) {
       return trips.get(id) ?? null;

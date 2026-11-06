@@ -1,17 +1,22 @@
-import React, {useCallback, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
-import MapView, {Marker, Polyline, type MapPressEvent, type Region} from 'react-native-maps';
-import {DriverMarker} from '../components/DriverMarker';
-import {RideStatusCard} from '../components/RideStatusCard';
-import {DEFAULT_REGION} from '../config';
-import {useCoordinator} from '../navigation/useCoordinator';
-import {useRideViewModel} from '../viewmodels/useRideViewModel';
+import React, { useCallback, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
+import MapView, {
+  Marker,
+  Polyline,
+  type MapPressEvent,
+  type Region,
+} from 'react-native-maps';
+import { DriverMarker } from '../components/DriverMarker';
+import { RideStatusCard } from '../components/RideStatusCard';
+import { DEFAULT_REGION } from '../config';
+import { useCoordinator } from '../navigation/useCoordinator';
+import { useRideViewModel } from '../viewmodels/useRideViewModel';
 
 /** Live map: nearby drivers, pickup/drop-off, and the assigned driver's progress. */
 export function RideScreen() {
   const vm = useRideViewModel();
   const coordinator = useCoordinator();
-  const {state} = vm;
+  const { state } = vm;
   const center = useRef<Region>(DEFAULT_REGION);
 
   const onMapPress = useCallback(
@@ -22,7 +27,11 @@ export function RideScreen() {
     center.current = region;
   }, []);
   const onRequest = useCallback(
-    () => vm.requestRide({latitude: center.current.latitude, longitude: center.current.longitude}),
+    () =>
+      vm.requestRide({
+        latitude: center.current.latitude,
+        longitude: center.current.longitude,
+      }),
     [vm.requestRide], // eslint-disable-line react-hooks/exhaustive-deps
   );
   const onViewTrip = useCallback(() => {
@@ -43,14 +52,31 @@ export function RideScreen() {
         onPress={onMapPress}
         onRegionChangeComplete={onRegionChange}
         showsCompass={false}
-        testID="ride-map">
+        testID="ride-map"
+      >
         {vm.drivers.map(driver => (
-          <DriverMarker key={driver.id} driver={driver} highlighted={driver.id === highlightedId} />
+          <DriverMarker
+            key={driver.id}
+            driver={driver}
+            highlighted={driver.id === highlightedId}
+          />
         ))}
-        {pickup && <Marker coordinate={pickup} pinColor="#2563eb" title="Pickup" />}
-        {state.dropoff && <Marker coordinate={state.dropoff} pinColor="#dc2626" title="Drop-off" />}
+        {pickup && (
+          <Marker coordinate={pickup} pinColor="#2563eb" title="Pickup" />
+        )}
+        {state.dropoff && (
+          <Marker
+            coordinate={state.dropoff}
+            pinColor="#dc2626"
+            title="Drop-off"
+          />
+        )}
         {state.route.length > 1 && (
-          <Polyline coordinates={state.route} strokeColor="#2563eb" strokeWidth={4} />
+          <Polyline
+            coordinates={state.route}
+            strokeColor="#2563eb"
+            strokeWidth={4}
+          />
         )}
       </MapView>
       <RideStatusCard
@@ -72,5 +98,5 @@ export function RideScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: { flex: 1 },
 });

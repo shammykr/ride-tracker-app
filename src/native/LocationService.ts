@@ -1,5 +1,5 @@
-import {NativeEventEmitter, NativeModules, Platform} from 'react-native';
-import type {Coordinate} from '../types';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
+import type { Coordinate } from '../types';
 
 export interface Position extends Coordinate {
   accuracy: number;
@@ -18,14 +18,17 @@ interface LocationServiceNative {
 
 /** Swift module (ios/RideTracker/NativeModules/LocationService.swift). */
 const native: LocationServiceNative | undefined = NativeModules.LocationService;
-const emitter = native && Platform.OS === 'ios' ? new NativeEventEmitter(native) : null;
+const emitter =
+  native && Platform.OS === 'ios' ? new NativeEventEmitter(native) : null;
 
 export const LocationService = {
   isAvailable: Boolean(native),
 
   getCurrentPosition(): Promise<Position> {
     if (!native) {
-      return Promise.reject(new Error('LocationService is only implemented on iOS'));
+      return Promise.reject(
+        new Error('LocationService is only implemented on iOS'),
+      );
     }
     return native.getCurrentPosition();
   },
@@ -33,13 +36,15 @@ export const LocationService = {
   /** Starts foreground updates; returns an unsubscribe function that also stops them. */
   async watchPosition(
     onPosition: (position: Position) => void,
-    onError?: (error: {code: string; message: string}) => void,
+    onError?: (error: { code: string; message: string }) => void,
   ): Promise<() => void> {
     if (!native || !emitter) {
       return () => {};
     }
     const updates = emitter.addListener('locationUpdate', onPosition);
-    const errors = emitter.addListener('locationError', error => onError?.(error));
+    const errors = emitter.addListener('locationError', error =>
+      onError?.(error),
+    );
     try {
       await native.startUpdating();
     } catch (error) {

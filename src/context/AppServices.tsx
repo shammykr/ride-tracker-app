@@ -1,17 +1,20 @@
-import React, {createContext, useContext, useMemo} from 'react';
-import {SERVER_URL} from '../config';
-import {HapticFeedback, type ImpactStyle} from '../native/HapticFeedback';
-import {LocationService} from '../native/LocationService';
-import {tripStore, type TripStore} from '../native/TripStore';
-import {RideSocket} from '../services/RideSocket';
-import {notify} from '../services/notifications';
+import React, { createContext, useContext, useMemo } from 'react';
+import { SERVER_URL } from '../config';
+import { HapticFeedback, type ImpactStyle } from '../native/HapticFeedback';
+import { LocationService } from '../native/LocationService';
+import { tripStore, type TripStore } from '../native/TripStore';
+import { RideSocket } from '../services/RideSocket';
+import { notify } from '../services/notifications';
 
 /** Everything the ViewModels talk to, injected so tests can swap in fakes. */
 export interface AppServices {
   socket: RideSocket;
   tripStore: TripStore;
-  location: Pick<typeof LocationService, 'getCurrentPosition' | 'watchPosition'>;
-  haptics: {impact(style?: ImpactStyle): void};
+  location: Pick<
+    typeof LocationService,
+    'getCurrentPosition' | 'watchPosition'
+  >;
+  haptics: { impact(style?: ImpactStyle): void };
   notify(title: string, message: string): void;
 }
 
@@ -36,7 +39,11 @@ export function AppServicesProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-  return <AppServicesContext.Provider value={value}>{children}</AppServicesContext.Provider>;
+  return (
+    <AppServicesContext.Provider value={value}>
+      {children}
+    </AppServicesContext.Provider>
+  );
 }
 
 export function useAppServices(): AppServices {

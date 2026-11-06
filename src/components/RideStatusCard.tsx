@@ -1,7 +1,17 @@
-import React, {memo} from 'react';
-import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
-import type {Driver, RidePhase, Trip} from '../types';
-import {formatCurrency, formatDistance, formatDuration} from '../utils/format';
+import React, { memo } from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import type { Driver, RidePhase, Trip } from '../types';
+import {
+  formatCurrency,
+  formatDistance,
+  formatDuration,
+} from '../utils/format';
 
 interface Props {
   phase: RidePhase;
@@ -18,7 +28,12 @@ interface Props {
   onViewTrip(): void;
 }
 
-function Button({label, onPress, kind = 'primary', disabled = false}: {
+function Button({
+  label,
+  onPress,
+  kind = 'primary',
+  disabled = false,
+}: {
   label: string;
   onPress(): void;
   kind?: 'primary' | 'secondary';
@@ -29,21 +44,31 @@ function Button({label, onPress, kind = 'primary', disabled = false}: {
       accessibilityRole="button"
       onPress={onPress}
       disabled={disabled}
-      style={({pressed}) => [
+      style={({ pressed }) => [
         styles.button,
         kind === 'secondary' && styles.secondary,
         (pressed || disabled) && styles.dimmed,
-      ]}>
-      <Text style={[styles.buttonText, kind === 'secondary' && styles.secondaryText]}>{label}</Text>
+      ]}
+    >
+      <Text
+        style={[
+          styles.buttonText,
+          kind === 'secondary' && styles.secondaryText,
+        ]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
 
 function RideStatusCardView(props: Props) {
-  const {phase, statusText, driver, lastTrip, connected, error} = props;
+  const { phase, statusText, driver, lastTrip, connected, error } = props;
   return (
     <View style={styles.card}>
-      {!connected && <Text style={styles.offline}>Connecting to the ride server…</Text>}
+      {!connected && (
+        <Text style={styles.offline}>Connecting to the ride server…</Text>
+      )}
       <View style={styles.row}>
         {phase === 'requesting' && <ActivityIndicator style={styles.spinner} />}
         <Text style={styles.status} testID="ride-status">
@@ -57,19 +82,30 @@ function RideStatusCardView(props: Props) {
       )}
       {phase === 'completed' && lastTrip && (
         <Text style={styles.driver}>
-          {formatCurrency(lastTrip.fare, lastTrip.currency)} · {formatDistance(lastTrip.distanceKm)} ·{' '}
+          {formatCurrency(lastTrip.fare, lastTrip.currency)} ·{' '}
+          {formatDistance(lastTrip.distanceKm)} ·{' '}
           {formatDuration(lastTrip.durationSeconds)}
         </Text>
       )}
       {error && <Text style={styles.error}>{error}</Text>}
       <View style={styles.actions}>
         {phase === 'idle' && (
-          <Button label="Request ride" onPress={props.onRequest} disabled={!props.canRequest} />
+          <Button
+            label="Request ride"
+            onPress={props.onRequest}
+            disabled={!props.canRequest}
+          />
         )}
-        {props.canCancel && <Button label="Cancel" kind="secondary" onPress={props.onCancel} />}
+        {props.canCancel && (
+          <Button label="Cancel" kind="secondary" onPress={props.onCancel} />
+        )}
         {phase === 'completed' && (
           <>
-            <Button label="View trip" kind="secondary" onPress={props.onViewTrip} />
+            <Button
+              label="View trip"
+              kind="secondary"
+              onPress={props.onViewTrip}
+            />
             <Button label="Done" onPress={props.onDismiss} />
           </>
         )}
@@ -92,17 +128,17 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowRadius: 12,
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     elevation: 6,
     gap: 6,
   },
-  row: {flexDirection: 'row', alignItems: 'center'},
-  spinner: {marginRight: 8},
-  status: {fontSize: 18, fontWeight: '600', color: '#111827', flexShrink: 1},
-  driver: {fontSize: 14, color: '#4b5563'},
-  offline: {fontSize: 13, color: '#b45309'},
-  error: {fontSize: 13, color: '#b91c1c'},
-  actions: {flexDirection: 'row', gap: 8, marginTop: 6},
+  row: { flexDirection: 'row', alignItems: 'center' },
+  spinner: { marginRight: 8 },
+  status: { fontSize: 18, fontWeight: '600', color: '#111827', flexShrink: 1 },
+  driver: { fontSize: 14, color: '#4b5563' },
+  offline: { fontSize: 13, color: '#b45309' },
+  error: { fontSize: 13, color: '#b91c1c' },
+  actions: { flexDirection: 'row', gap: 8, marginTop: 6 },
   button: {
     flex: 1,
     paddingVertical: 12,
@@ -110,8 +146,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#111827',
     alignItems: 'center',
   },
-  secondary: {backgroundColor: '#f3f4f6'},
-  dimmed: {opacity: 0.5},
-  buttonText: {color: '#fff', fontWeight: '600', fontSize: 16},
-  secondaryText: {color: '#111827'},
+  secondary: { backgroundColor: '#f3f4f6' },
+  dimmed: { opacity: 0.5 },
+  buttonText: { color: '#fff', fontWeight: '600', fontSize: 16 },
+  secondaryText: { color: '#111827' },
 });

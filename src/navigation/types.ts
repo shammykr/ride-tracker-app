@@ -1,4 +1,4 @@
-import type {NavigatorScreenParams} from '@react-navigation/native';
+import type { NavigatorScreenParams } from '@react-navigation/native';
 
 export type TabParamList = {
   Ride: undefined;
@@ -7,5 +7,5 @@ export type TabParamList = {
 
 export type RootStackParamList = {
   Main: NavigatorScreenParams<TabParamList>;
-  TripDetail: {tripId: string};
+  TripDetail: { tripId: string };
 };

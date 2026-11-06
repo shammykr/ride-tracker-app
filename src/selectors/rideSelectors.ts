@@ -1,6 +1,6 @@
-import {createSelector} from 'reselect';
-import type {RideState} from '../viewmodels/rideReducer';
-import {formatEta} from '../utils/format';
+import { createSelector } from 'reselect';
+import type { RideState } from '../viewmodels/rideReducer';
+import { formatEta } from '../utils/format';
 
 const selectPhase = (state: RideState) => state.phase;
 const selectNearby = (state: RideState) => state.nearbyDrivers;
@@ -37,7 +37,9 @@ export const selectStatusText = createSelector(
       case 'arrived':
         return `${driver?.name ?? 'Your driver'} has arrived`;
       case 'inProgress':
-        return remaining === null ? 'On the way' : `Arriving in ${formatEta(remaining)}`;
+        return remaining === null
+          ? 'On the way'
+          : `Arriving in ${formatEta(remaining)}`;
       case 'completed':
         return 'You have arrived';
     }
@@ -45,8 +47,13 @@ export const selectStatusText = createSelector(
 );
 
 export const selectCanRequest = createSelector(
-  [selectPhase, (state: RideState) => state.dropoff, (state: RideState) => state.connection],
-  (phase, dropoff, connection) => phase === 'idle' && dropoff !== null && connection === 'connected',
+  [
+    selectPhase,
+    (state: RideState) => state.dropoff,
+    (state: RideState) => state.connection,
+  ],
+  (phase, dropoff, connection) =>
+    phase === 'idle' && dropoff !== null && connection === 'connected',
 );
 
 export const selectCanCancel = createSelector([selectPhase], phase =>

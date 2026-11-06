@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 /**
  * Mock server URL. The iOS simulator reaches the Mac as localhost; the Android

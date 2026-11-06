@@ -1,18 +1,22 @@
-import {io, type Socket} from 'socket.io-client';
-import type {Coordinate, Driver} from '../types';
+import { io, type Socket } from 'socket.io-client';
+import type { Coordinate, Driver } from '../types';
 
 /** Events sent by the mock server (server/index.js). */
 export interface ServerEvents {
-  nearby_drivers: (payload: {drivers: Driver[]; timestamp: number}) => void;
-  driver_assigned: (payload: {rideId: string; driver: Driver; etaSeconds: number}) => void;
+  nearby_drivers: (payload: { drivers: Driver[]; timestamp: number }) => void;
+  driver_assigned: (payload: {
+    rideId: string;
+    driver: Driver;
+    etaSeconds: number;
+  }) => void;
   driver_approaching: (payload: {
     rideId: string;
     location: Coordinate;
     heading: number;
     etaSeconds: number;
   }) => void;
-  driver_arrived: (payload: {rideId: string; location: Coordinate}) => void;
-  trip_started: (payload: {rideId: string; startedAt: number}) => void;
+  driver_arrived: (payload: { rideId: string; location: Coordinate }) => void;
+  trip_started: (payload: { rideId: string; startedAt: number }) => void;
   trip_progress: (payload: {
     rideId: string;
     location: Coordinate;
@@ -34,7 +38,7 @@ export interface RideRequest {
   dropoff: Coordinate;
 }
 
-type Ack = {ok: true; rideId: string} | {ok: false; error: string};
+type Ack = { ok: true; rideId: string } | { ok: false; error: string };
 
 interface ClientEvents {
   request_ride: (request: RideRequest, ack: (response: Ack) => void) => void;
@@ -65,7 +69,10 @@ export class RideSocket {
     this.socket.disconnect();
   }
 
-  on<E extends keyof ServerEvents>(event: E, handler: ServerEvents[E]): () => void {
+  on<E extends keyof ServerEvents>(
+    event: E,
+    handler: ServerEvents[E],
+  ): () => void {
     // socket.io's overloads can't follow the generic key; the types above are the contract.
     (this.socket.on as (e: string, h: unknown) => void)(event, handler);
     return () => {
@@ -90,15 +97,17 @@ export class RideSocket {
   /** Resolves with the ride id, or rejects with the server's reason. */
   requestRide(request: RideRequest, timeoutMs = 10000): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.socket.timeout(timeoutMs).emit('request_ride', request, (error, response) => {
-        if (error) {
-          reject(new Error('The server did not respond'));
-        } else if (response.ok) {
-          resolve(response.rideId);
-        } else {
-          reject(new Error(response.error));
-        }
-      });
+      this.socket
+        .timeout(timeoutMs)
+        .emit('request_ride', request, (error, response) => {
+          if (error) {
+            reject(new Error('The server did not respond'));
+          } else if (response.ok) {
+            resolve(response.rideId);
+          } else {
+            reject(new Error(response.error));
+          }
+        });
     });
   }
 
