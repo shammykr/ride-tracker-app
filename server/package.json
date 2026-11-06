@@ -1,0 +1,16 @@
+{
+  "name": "ride-tracker-mock-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mock socket.io backend for Ride Tracker: fake drivers and ride lifecycle events",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.4"
+  }
+}
