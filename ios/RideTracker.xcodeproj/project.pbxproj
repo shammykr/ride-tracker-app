@@ -401,8 +401,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker;
 				PRODUCT_NAME = RideTracker;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -430,7 +432,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker;
 				PRODUCT_NAME = RideTracker;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -586,7 +590,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RideTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RideTracker";
 				VALIDATE_PRODUCT = YES;
@@ -604,7 +610,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RideTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RideTracker";
 			};
