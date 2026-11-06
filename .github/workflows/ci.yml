@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Type-check, lint, test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: TypeScript
+        run: npx tsc --noEmit
+      - name: ESLint
+        run: npx eslint . --max-warnings 0
+      - name: Jest
+        run: npx jest --ci
+      - name: Mock server syntax
+        run: node --check server/index.js
+
+  ios:
+    name: iOS build and Swift tests (Fastlane)
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - uses: actions/cache@v4
+        with:
+          path: ios/Pods
+          key: pods-${{ runner.os }}-${{ hashFiles('ios/Podfile', 'package-lock.json') }}
+      - name: Install pods
+        run: bundle exec fastlane ios pods
+      - name: Pick a simulator
+        run: |
+          device=$(xcrun simctl list devices available | grep -m1 -oE 'iPhone [0-9]+( Pro)?' || true)
+          echo "Using simulator: $device"
+          echo "SCAN_DEVICE=$device" >> "$GITHUB_ENV"
+      - name: Build and run Swift tests (scan)
+        run: bundle exec fastlane ios test
+      - name: Release archive, unsigned (gym)
+        run: bundle exec fastlane ios build skip_codesigning:true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-test-results
+          path: fastlane/test_output
+          if-no-files-found: ignore
