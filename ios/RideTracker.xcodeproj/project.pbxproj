@@ -50,10 +50,10 @@
 		82315BA589C76B95B4267CF4 /* TripStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TripStore.swift; sourceTree = "<group>"; };
 		88B804238B5671025A1B8072 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		91469221BEFA39BC8A50FEA4 /* LocationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		98ADCA6A504013B0106AA2EC /* PushNotifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
+		98ADCA6A504013B0106AA2EC /* PushNotifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PushNotifications.swift; path = RideTracker/PushNotifications.swift; sourceTree = "<group>"; };
 		A0C68A54BB5378CB1BEC6772 /* NativeModuleRegistry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeModuleRegistry.swift; sourceTree = "<group>"; };
-		BFEA762203797C38DCEC96EB /* RideTracker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = RideTracker.entitlements; sourceTree = "<group>"; };
-		D29E67E486EB34F2184D2FFE /* RideTracker-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RideTracker-Bridging-Header.h"; sourceTree = "<group>"; };
+		BFEA762203797C38DCEC96EB /* RideTracker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; name = RideTracker.entitlements; path = RideTracker/RideTracker.entitlements; sourceTree = "<group>"; };
+		D29E67E486EB34F2184D2FFE /* RideTracker-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RideTracker-Bridging-Header.h"; path = "RideTracker/RideTracker-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -162,7 +162,7 @@
 				A0C68A54BB5378CB1BEC6772 /* NativeModuleRegistry.swift */,
 			);
 			name = NativeModules;
-			path = NativeModules;
+			path = RideTracker/NativeModules;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -584,6 +584,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -601,6 +602,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shammykr.ridetracker.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "RideTracker/RideTracker-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
