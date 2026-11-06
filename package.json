@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
+    "android": "react-native run-android",
     "start": "react-native start",
+    "server": "npm --prefix server start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
     "test": "jest"
   },
   "dependencies": {
