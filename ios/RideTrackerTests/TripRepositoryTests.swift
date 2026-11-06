@@ -91,8 +91,10 @@ final class NativeModuleTests: XCTestCase {
     for (moduleClass, info) in exports {
       let signature = String(cString: info.pointee.objcName)
       // "getTrip:(NSString *)tripId resolve:(...)resolve" -> "getTrip:resolve:"
-      let selector = signature.split(separator: " ")
-        .compactMap { part -> String? in
+      let withoutTypes = signature.replacingOccurrences(
+        of: "\\([^)]*\\)", with: "", options: .regularExpression)
+      let selector = withoutTypes.split(separator: " ")
+        .map { part -> String in
           guard let colon = part.firstIndex(of: ":") else { return String(part) }
           return String(part[...colon])
         }
