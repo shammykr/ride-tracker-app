@@ -1,0 +1,3 @@
+app_identifier("com.shammykr.ridetracker")
+# apple_id("you@example.com")   # needed only for App Store / TestFlight lanes
+# team_id("ABCDE12345")         # or set FASTLANE_TEAM_ID

@@ -1,0 +1,48 @@
+# Run from the repository root:
+#   bundle exec fastlane ios test                        # build + run XCTest (scan)
+#   bundle exec fastlane ios build                       # signed Release archive + .ipa (gym)
+#   bundle exec fastlane ios build skip_codesigning:true # unsigned archive (CI)
+
+default_platform(:ios)
+
+WORKSPACE = "ios/RideTracker.xcworkspace"
+SCHEME = "RideTracker"
+
+platform :ios do
+  desc "Install CocoaPods dependencies"
+  lane :pods do
+    cocoapods(podfile: "ios/Podfile", try_repo_update_on_error: true)
+  end
+
+  desc "Build the app for the simulator and run the Swift unit tests"
+  lane :test do
+    pods unless File.exist?(File.join("..", WORKSPACE))
+    scan(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      device: ENV["SCAN_DEVICE"], # e.g. "iPhone 16"; scan picks a simulator when unset
+      clean: true,
+      code_coverage: true,
+      output_directory: "fastlane/test_output",
+      output_types: "junit,html"
+    )
+  end
+
+  desc "Archive a Release build with gym (options: skip_codesigning, export_method)"
+  lane :build do |options|
+    pods unless File.exist?(File.join("..", WORKSPACE))
+    unsigned = options[:skip_codesigning] == true || options[:skip_codesigning].to_s == "true"
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      configuration: "Release",
+      clean: true,
+      output_directory: "build",
+      output_name: "RideTracker.ipa",
+      export_method: options[:export_method] || "development",
+      skip_codesigning: unsigned,
+      skip_package_ipa: unsigned,
+      xcargs: unsigned ? "CODE_SIGNING_ALLOWED=NO" : nil
+    )
+  end
+end
